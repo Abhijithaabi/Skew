@@ -31,6 +31,10 @@ public class GameOverHandler : MonoBehaviour
     {
         SceneManager.LoadScene(1);
     }
+    public void MenuGame()
+    {
+        SceneManager.LoadScene(0);
+    }
     void EnableGameOver()
     {
         GameoverCanvas.gameObject.SetActive(true);
