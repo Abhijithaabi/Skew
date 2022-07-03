@@ -3,10 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class StartMenuHandler : MonoBehaviour
 {
     [SerializeField] GameObject MenuPanel;
+    [SerializeField] TextMeshProUGUI highScoreTxt;
+    scoreKeeper scoreKeeper;
     
     
     bool IsMenuenabled;
@@ -15,7 +18,9 @@ public class StartMenuHandler : MonoBehaviour
     void Start()
     {
         IsMenuenabled = true;
-        
+        scoreKeeper = FindObjectOfType<scoreKeeper>();
+        float highScore =  scoreKeeper.getHighScore();
+        highScoreTxt.text = Mathf.FloorToInt(highScore).ToString();        
     }
 
     

@@ -11,7 +11,9 @@ public class GameOverHandler : MonoBehaviour
     scoreKeeper scoreKeeper;
     [SerializeField] Canvas GameoverCanvas;
     [SerializeField] TextMeshProUGUI currentScoreTxt;
+    [SerializeField] TextMeshProUGUI highScoreTxt;
     float currentScore;
+    float highScore;
     void Start()
     {
         player = FindObjectOfType<Player>();
@@ -41,6 +43,12 @@ public class GameOverHandler : MonoBehaviour
         scoreKeeper.DisableScoreTxt();
         currentScore = scoreKeeper.getCurrentScore();
         currentScoreTxt.text = "Your Score : " + Mathf.FloorToInt(currentScore);
+        highScore = scoreKeeper.getHighScore();
+        if(currentScore>highScore)
+        {
+            scoreKeeper.setHighscore(currentScore);
+        }
+        highScoreTxt.text = "Best Score : "+ Mathf.FloorToInt(highScore).ToString();
 
     }
 }

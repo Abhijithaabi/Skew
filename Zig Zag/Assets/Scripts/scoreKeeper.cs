@@ -9,6 +9,12 @@ public class scoreKeeper : MonoBehaviour
     [SerializeField] float scoreMultiplier;
     float score = 0;
     bool shouldCount = false;
+    float highScore;  
+    private static scoreKeeper Instance;
+    private void Awake() {
+        highScore = PlayerPrefs.GetFloat("HighScore",0);
+        
+    }
     void Start()
     {
         
@@ -39,5 +45,14 @@ public class scoreKeeper : MonoBehaviour
     {
         return score;
     }
+    public float getHighScore()
+    {
+        return highScore;
+    }
+    public void setHighscore(float score)
+    {
+        PlayerPrefs.SetFloat("HighScore",score);
+    }
+    
     
 }

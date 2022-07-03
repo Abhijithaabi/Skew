@@ -11,17 +11,21 @@ public class Player : MonoBehaviour
     [SerializeField] CinemachineVirtualCamera VC;
     
     
-    [SerializeField] scoreKeeper score;
+    scoreKeeper score;
     
     Vector3 dir;
     bool isDead;
     bool isMoving;
     static Player Instance;
+    private void Awake() {
+        score = FindObjectOfType<scoreKeeper>();
+    }
 
     
     
     void Start()
     {
+        
         isDead = false;
         dir = Vector3.zero;
         
