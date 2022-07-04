@@ -9,6 +9,7 @@ public class StartMenuHandler : MonoBehaviour
 {
     [SerializeField] GameObject MenuPanel;
     [SerializeField] TextMeshProUGUI highScoreTxt;
+    [SerializeField] TextMeshProUGUI GemsTxt;
     scoreKeeper scoreKeeper;
     
     
@@ -20,7 +21,8 @@ public class StartMenuHandler : MonoBehaviour
         IsMenuenabled = true;
         scoreKeeper = FindObjectOfType<scoreKeeper>();
         float highScore =  scoreKeeper.getHighScore();
-        highScoreTxt.text = Mathf.FloorToInt(highScore).ToString();        
+        highScoreTxt.text = Mathf.FloorToInt(highScore).ToString();
+        GemsTxt.text = scoreKeeper.getnoOfGems().ToString();        
     }
 
     

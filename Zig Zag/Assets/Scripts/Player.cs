@@ -9,6 +9,8 @@ public class Player : MonoBehaviour
     [SerializeField] float speed = 10f;
     [SerializeField] GameObject ps;
     [SerializeField] CinemachineVirtualCamera VC;
+    [SerializeField] GameObject DeathEffect;
+    
     
     
     scoreKeeper score;
@@ -16,15 +18,21 @@ public class Player : MonoBehaviour
     Vector3 dir;
     bool isDead;
     bool isMoving;
+    int Gems;
+    
     static Player Instance;
     private void Awake() {
+        
         score = FindObjectOfType<scoreKeeper>();
+        
     }
 
     
     
     void Start()
     {
+        Gems = score.getnoOfGems();
+        score.updateGemTxt(Gems);
         
         isDead = false;
         dir = Vector3.zero;
@@ -59,8 +67,12 @@ public class Player : MonoBehaviour
     {
         if(other.tag == "Pickup")
         {
+            
             other.gameObject.SetActive(false);
             SpawnParticles();
+            Gems++;
+            score.setnoOfGems(Gems);
+            score.updateGemTxt(Gems);
         }   
     }
     void SpawnParticles()
@@ -80,6 +92,10 @@ public class Player : MonoBehaviour
                 print("Dead");
                 VC.Follow = null;
                 score.stopScoreCount();
+                dir = Vector3.zero;
+                gameObject.SetActive(false);
+                Instantiate(DeathEffect,transform.position,Quaternion.identity);
+                
             }
         }   
     }
