@@ -48,6 +48,10 @@ public class scoreKeeper : MonoBehaviour
     {
         scoreTxt.enabled = false;
     }
+    public void EnableScoreTxt()
+    {
+        scoreTxt.enabled = true;
+    }
     public float getCurrentScore()
     {
         return score;
@@ -68,6 +72,7 @@ public class scoreKeeper : MonoBehaviour
     {
         PlayerPrefs.SetInt("Gems",Gems);
     }
+
     
     
 }

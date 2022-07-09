@@ -6,10 +6,16 @@ public class Tile : MonoBehaviour
 {
     TileManager tilemanager;
     float fallDelay = 0.3f;
+    [SerializeField] int id;
+    
+    Player player;
+    
+
     
     void Start()
     {
         tilemanager = FindObjectOfType<TileManager>();
+        player = FindObjectOfType<Player>();
     }
 
     
@@ -21,8 +27,11 @@ public class Tile : MonoBehaviour
     {
         if(other.tag == "Player")
         {
-            tilemanager.SpawnTile();
+            
+            player.setLastTileDtails(transform.position,gameObject.name);
+            tilemanager.SpawnTile(-1);
             StartCoroutine(FallDown());
+            
         }   
     }
     IEnumerator FallDown()
@@ -46,4 +55,13 @@ public class Tile : MonoBehaviour
             
         }
     }
+    public int getId()
+    {
+        return id;
+    }
+    public void setId(int value)
+    {
+        id = value;
+    }
+    
 }

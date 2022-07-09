@@ -12,13 +12,15 @@ public class GameOverHandler : MonoBehaviour
     [SerializeField] Canvas GameoverCanvas;
     [SerializeField] TextMeshProUGUI currentScoreTxt;
     [SerializeField] TextMeshProUGUI highScoreTxt;
+    [SerializeField] TileManager tileManager;
+    [SerializeField] GameObject continueBtn;
     float currentScore;
     float highScore;
     void Start()
     {
         player = FindObjectOfType<Player>();
         scoreKeeper = FindObjectOfType<scoreKeeper>();
-        GameoverCanvas.gameObject.SetActive(false);
+        GameoverCanvas.enabled = false;
     }
 
     
@@ -39,7 +41,7 @@ public class GameOverHandler : MonoBehaviour
     }
     void EnableGameOver()
     {
-        GameoverCanvas.gameObject.SetActive(true);
+        GameoverCanvas.enabled = true;
         scoreKeeper.DisableScoreTxt();
         currentScore = scoreKeeper.getCurrentScore();
         currentScoreTxt.text = "Your Score : " + Mathf.FloorToInt(currentScore);
@@ -50,5 +52,22 @@ public class GameOverHandler : MonoBehaviour
         }
         highScoreTxt.text = "Best Score : "+ Mathf.FloorToInt(highScore).ToString();
 
+    }
+    public void ContinueGame()
+    {
+        DisableGameOver();
+        tileManager.spawnLastTile();
+        player.RespawnPlayer();
+    }
+    void DisableGameOver()
+    {
+        GameoverCanvas.enabled=false;
+        scoreKeeper.EnableScoreTxt();
+        
+    }
+    public void continueGameBtn()
+    {
+        AdManager.Instance.ShowAd(this);
+        continueBtn.SetActive(false);
     }
 }

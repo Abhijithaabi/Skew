@@ -10,6 +10,8 @@ public class Player : MonoBehaviour
     [SerializeField] GameObject ps;
     [SerializeField] CinemachineVirtualCamera VC;
     [SerializeField] GameObject DeathEffect;
+    Vector3 lastTilePos;
+    string TileType;
     
     
     
@@ -88,17 +90,25 @@ public class Player : MonoBehaviour
             if(!Physics.Raycast(downray, out Hit))
             {
                 //kill Player
-                isDead = true;
-                print("Dead");
-                VC.Follow = null;
-                score.stopScoreCount();
-                dir = Vector3.zero;
-                gameObject.SetActive(false);
-                Instantiate(DeathEffect,transform.position,Quaternion.identity);
-                
+                Death();
+
             }
         }   
     }
+
+    private void Death()
+    {
+        isDead = true;
+        print("Dead");
+        print("lasttilepos:" + lastTilePos);
+        print("TileType:" + TileType);
+        VC.Follow = null;
+        score.stopScoreCount();
+        dir = Vector3.zero;
+        gameObject.SetActive(false);
+        Instantiate(DeathEffect, transform.position, Quaternion.identity);
+    }
+
     public bool GetIsDead()
     {
         return isDead;
@@ -106,5 +116,27 @@ public class Player : MonoBehaviour
     public bool GetIsMoving()
     {
         return isMoving;
+    }
+    public void setLastTileDtails(Vector3 pos,string name)
+    {
+        lastTilePos = pos;
+        TileType = name;
+    }
+    public Vector3 getLastTilePos()
+    {
+        return lastTilePos;
+    }
+    public string getLastTileType()
+    {
+        return TileType;
+    }
+    public void RespawnPlayer()
+    {
+        isDead = false;
+        transform.position = lastTilePos + new Vector3(1,3,1);
+        gameObject.SetActive(true);
+        VC.Follow = transform;
+        
+        
     }
 }

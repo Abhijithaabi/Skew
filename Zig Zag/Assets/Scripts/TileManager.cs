@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class TileManager : MonoBehaviour
 {
-    
+    Player player;
     [SerializeField] GameObject[] tilePrefabs;
     [SerializeField] GameObject currentTile;
     Stack<GameObject> leftTiles = new Stack<GameObject>();
@@ -12,13 +12,16 @@ public class TileManager : MonoBehaviour
 
     public Stack<GameObject> LeftTiles { get => leftTiles; set => leftTiles = value; }
     public Stack<GameObject> TopTiles { get => topTiles; set => topTiles = value; }
+    private void Awake() {
+        player = FindObjectOfType<Player>();
+    }
 
     void Start()
     {
         CreateTiles(10);
         for (int i = 0; i < 50; i++)
         {
-            SpawnTile();
+            SpawnTile(i+1);
         }
     }
    
@@ -40,7 +43,7 @@ public class TileManager : MonoBehaviour
             LeftTiles.Peek().SetActive(false);  
         }
     }
-    public void SpawnTile()
+    public void SpawnTile(int id)
     {
         if(LeftTiles.Count == 0 || TopTiles.Count == 0)
         {
@@ -55,6 +58,11 @@ public class TileManager : MonoBehaviour
             tmp.transform.rotation = Quaternion.Euler(new Vector3(0,0,0));
             currentTile = tmp;
             currentTile.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ;
+            if(id > 0)
+            {
+                currentTile.GetComponent<Tile>().setId(id);
+            }
+            
         }
         else if(randomIndex == 1)
         {
@@ -64,11 +72,37 @@ public class TileManager : MonoBehaviour
             tmp.transform.rotation = Quaternion.Euler(new Vector3(0,0,0));
             currentTile = tmp;
             currentTile.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ;
+            if(id > 0)
+             {
+                currentTile.GetComponent<Tile>().setId(id);
+             }   
+            
         }
         int SpawnItemProb = Random.Range(0,10);
         if(SpawnItemProb == 0)
         {
             currentTile.transform.GetChild(1).gameObject.SetActive(true);
+        }
+    }
+    public void spawnLastTile()
+    {
+        string Tiletype = player.getLastTileType();
+        Vector3 lasttilepos = player.getLastTilePos();
+        if(Tiletype != null && Tiletype == "TopTile")
+        {
+            GameObject tmp = TopTiles.Pop();
+            tmp.SetActive(true);
+            tmp.transform.position = lasttilepos;
+            tmp.transform.rotation = Quaternion.Euler(new Vector3(0,0,0));
+            tmp.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ;
+        }
+        else if(Tiletype != null && Tiletype == "LeftTile")
+        {
+            GameObject tmp = LeftTiles.Pop();
+            tmp.SetActive(true);
+            tmp.transform.position = lasttilepos;
+            tmp.transform.rotation = Quaternion.Euler(new Vector3(0,0,0));
+            tmp.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ; 
         }
     }
 }
