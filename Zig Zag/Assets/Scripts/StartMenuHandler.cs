@@ -10,6 +10,7 @@ public class StartMenuHandler : MonoBehaviour
     [SerializeField] GameObject MenuPanel;
     [SerializeField] TextMeshProUGUI highScoreTxt;
     [SerializeField] TextMeshProUGUI GemsTxt;
+    
     scoreKeeper scoreKeeper;
     
     
@@ -43,6 +44,10 @@ public class StartMenuHandler : MonoBehaviour
     public void StartGame()
     {
         SceneManager.LoadScene(1);
+    }
+    public void ShopBtn()
+    {
+        SceneManager.LoadScene(2);
     }
 
 }

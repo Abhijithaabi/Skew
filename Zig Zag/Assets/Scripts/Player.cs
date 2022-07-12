@@ -21,11 +21,20 @@ public class Player : MonoBehaviour
     bool isDead;
     bool isMoving;
     int Gems;
+    MeshRenderer PlayerMesh;
     
     static Player Instance;
     private void Awake() {
         
         score = FindObjectOfType<scoreKeeper>();
+        PlayerMesh = GetComponent<MeshRenderer>();
+        if(SkinManager.EquippedSkin != null)
+        {
+            PlayerMesh.material = SkinManager.EquippedSkin;
+            PlayerMesh.material.shader = Shader.Find("Standard");
+        }
+        
+
         
     }
 
@@ -133,7 +142,7 @@ public class Player : MonoBehaviour
     public void RespawnPlayer()
     {
         isDead = false;
-        transform.position = lastTilePos + new Vector3(1,3,1);
+        transform.position = lastTilePos + new Vector3(-1.5f,3,1.5f);
         gameObject.SetActive(true);
         VC.Follow = transform;
         

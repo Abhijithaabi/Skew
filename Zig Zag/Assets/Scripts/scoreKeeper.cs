@@ -72,6 +72,19 @@ public class scoreKeeper : MonoBehaviour
     {
         PlayerPrefs.SetInt("Gems",Gems);
     }
+    public bool TryRemoveGems(int GemstoRemove)
+    {
+        if(noOfGems >= GemstoRemove)
+        {
+            noOfGems -= GemstoRemove;
+            setnoOfGems(noOfGems);
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
 
     
     
